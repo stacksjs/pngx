@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer'
 import { EventEmitter } from 'node:events'
+import process from 'node:process'
 import Packer from './packer-async'
 import Parser from './parser-async'
 import PNGSync from './png-sync'
@@ -32,8 +33,8 @@ export class PNG extends EventEmitter {
     super()
 
     // Coerce pixel dimensions to integers (also coerces undefined -> 0)
-    this.width = options.width | 0
-    this.height = options.height | 0
+    this.width = options.width || 0
+    this.height = options.height || 0
 
     this.data = this.width > 0 && this.height > 0
       ? Buffer.alloc(4 * this.width * this.height)

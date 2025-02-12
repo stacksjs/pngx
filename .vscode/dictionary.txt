@@ -3,6 +3,7 @@ AAAABCD
 antfu
 BGRA
 biomejs
+bitblt
 Bitpack
 blitting
 booleanish
