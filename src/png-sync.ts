@@ -23,7 +23,10 @@ interface PNGReadResult {
  * @returns Decoded PNG data including dimensions and pixel data
  */
 export function read(buffer: Buffer, options: PNGSyncOptions = {}): PNGReadResult {
-  return parse(buffer, options)
+  const result = parse(buffer, options)
+  if (!result.data)
+    throw new Error('Invalid PNG data')
+  return result as PNGReadResult
 }
 
 /**
@@ -34,4 +37,9 @@ export function read(buffer: Buffer, options: PNGSyncOptions = {}): PNGReadResul
  */
 export function write(png: PNG | PNGReadResult, options: PNGSyncOptions = {}): Buffer {
   return pack(png, options)
+}
+
+export default {
+  write,
+  read,
 }

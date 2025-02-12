@@ -14,14 +14,15 @@ interface ParserSyncOptions {
 interface MetaData {
   width: number
   height: number
-  depth: number
-  bpp: number
+  depth: 1 | 2 | 4 | 8 | 16
+  bpp: 1 | 2 | 4 | 3
   interlace: boolean
   color?: boolean
+  colorType: number
   alpha?: boolean
   data?: Buffer
   gamma?: number
-  palette?: Buffer
+  palette?: Color[] // Change from Buffer to Color array
   transColor?: number[]
 }
 
@@ -52,28 +53,35 @@ export function parseSync(buffer: Buffer, options: ParserSyncOptions = {}): Meta
     read(): Buffer {
       return Buffer.alloc(0) // Will be overridden by reader.read
     },
+
     error(_err: Error): void {
       err = _err
     },
+
     metadata(_metaData: MetaData): void {
       metaData = _metaData
     },
+
     gamma(_gamma: number): void {
       gamma = _gamma
     },
+
     palette(palette: Buffer): void {
       if (metaData) {
         metaData.palette = palette
       }
     },
+
     transColor(transColor: number[]): void {
       if (metaData) {
         metaData.transColor = transColor
       }
     },
+
     inflateData(inflatedData: Buffer): void {
       inflateDataList.push(inflatedData)
     },
+
     simpleTransparency(): void {
       if (metaData) {
         metaData.alpha = true
@@ -89,25 +97,26 @@ export function parseSync(buffer: Buffer, options: ParserSyncOptions = {}): Meta
   parser.start()
   reader.process()
 
-  if (err) {
+  if (err)
     throw err
-  }
 
-  if (!metaData) {
+  if (!metaData)
     throw new Error('PNG parsing failed - no metadata available')
-  }
 
   // Join together the inflate data
   const inflateData = Buffer.concat(inflateDataList)
   inflateDataList.length = 0
 
+  // Add type guard to help TypeScript narrow the type
+  const validatedMeta: MetaData = metaData
+
   let inflatedData: Buffer
-  if (metaData.interlace) {
+  if (validatedMeta.interlace) {
     inflatedData = zlibInflateSync(inflateData)
   }
   else {
-    const rowSize = ((metaData.width * metaData.bpp * metaData.depth + 7) >> 3) + 1
-    const imageSize = rowSize * metaData.height
+    const rowSize = ((validatedMeta.width * validatedMeta.bpp * validatedMeta.depth + 7) >> 3) + 1
+    const imageSize = rowSize * validatedMeta.height
     inflatedData = inflateSync(inflateData, {
       chunkSize: imageSize,
       maxLength: imageSize,
@@ -118,16 +127,16 @@ export function parseSync(buffer: Buffer, options: ParserSyncOptions = {}): Meta
     throw new Error('Bad PNG - invalid inflate data response')
   }
 
-  const unfilteredData = FilterSync.process(inflatedData, metaData)
-  const bitmapData = dataToBitMap(unfilteredData, metaData)
-  const normalisedBitmapData = formatNormalizer(
-    bitmapData,
-    metaData,
+  const unfilteredData = FilterSync(inflatedData, validatedMeta)
+  const bitmapData = dataToBitMap(unfilteredData, validatedMeta)
+  const normalizedBitmapData = formatNormalizer(
+    Buffer.from(bitmapData.buffer),
+    validatedMeta,
     options.skipRescale,
   )
 
-  metaData.data = normalisedBitmapData
-  metaData.gamma = gamma || 0
+  validatedMeta.data = normalizedBitmapData
+  validatedMeta.gamma = gamma || 0
 
   return metaData
 }
