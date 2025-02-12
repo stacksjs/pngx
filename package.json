@@ -1,25 +1,24 @@
 {
-  "name": "ts-jpeg",
+  "name": "ts-png",
   "type": "module",
   "version": "0.1.0",
-  "description": "TypeScript implementation of a performant JPEG encoder & decoder.",
+  "description": "Performant TypeScript PNG encoder & decoder.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
-  "homepage": "https://github.com/stacksjs/ts-jpeg#readme",
+  "homepage": "https://github.com/stacksjs/ts-png#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stacksjs/ts-jpeg.git"
+    "url": "git+https://github.com/stacksjs/ts-png.git"
   },
   "bugs": {
-    "url": "https://github.com/stacksjs/ts-jpeg/issues"
+    "url": "https://github.com/stacksjs/ts-png/issues"
   },
   "keywords": [
-    "jpeg",
-    "jpg",
+    "png",
     "encoder",
     "decoder",
     "typescript",
-    "ts-jpeg",
+    "ts-png",
     "library"
   ],
   "exports": {
