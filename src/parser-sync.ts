@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer'
-import { deflateSync, inflateSync as zlibInflateSync } from 'node:zlib'
+import { inflateSync as zlibInflateSync } from 'node:zlib'
 import { dataToBitMap } from './bitmapper'
 import FilterSync from './filter-parse-sync'
 import formatNormalizer from './format-normalizer'

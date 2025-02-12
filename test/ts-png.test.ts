@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer'
+
 const assert = require('node:assert')
 const fs = require('node:fs')
 const path = require('node:path')

@@ -1,16 +1,16 @@
-let serveStatic = require("serve-static");
-let http = require("http");
-let connect = require("connect");
+const http = require('node:http')
+const connect = require('connect')
+const serveStatic = require('serve-static')
 
-let app = connect();
-let server = http.createServer(app);
+const app = connect()
+const server = http.createServer(app)
 
-app.use(serveStatic("test"));
+app.use(serveStatic('test'))
 
-server.listen(8000);
+server.listen(8000)
 
 module.exports = () => {
-  server.close();
-};
+  server.close()
+}
 
-console.log("Tests available at http://localhost:8000/");
+console.log('Tests available at http://localhost:8000/')

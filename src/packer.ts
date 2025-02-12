@@ -14,7 +14,7 @@ import {
   TYPE_IEND,
   TYPE_IHDR,
 } from './constants'
-import crc32, { CrcCalculator } from './crc'
+import { CrcCalculator } from './crc'
 import filterPack from './filter-pack'
 
 export interface PackerOptions {
