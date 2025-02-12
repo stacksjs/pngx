@@ -216,3 +216,5 @@ export class PNG extends EventEmitter {
     PNG.adjustGamma(this)
   }
 }
+
+export default PNG

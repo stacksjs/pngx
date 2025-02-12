@@ -7,7 +7,7 @@ interface BitmapInfo {
   height: number
   interlace: boolean
   bpp: number
-  depth: number
+  depth: 1 | 2 | 4 | 8 | 16
 }
 
 /**

@@ -14,7 +14,7 @@ interface ParserOptions {
 interface BitmapInfo {
   width: number
   height: number
-  depth: number
+  depth: 1 | 2 | 4 | 8 | 16
   bpp: number
   interlace: boolean
   palette?: Buffer
