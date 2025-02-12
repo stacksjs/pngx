@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "ts-png"
+  name: "pngx"
   text: "TypeScript PNG Image Processing"
   tagline: "High-performance PNG encoding & decoding with type safety."
   image: /images/logo-white.png
@@ -13,7 +13,7 @@ hero:
       link: /intro
     - theme: alt
       text: View on GitHub
-      link: https://github.com/stacksjs/ts-png
+      link: https://github.com/stacksjs/pngx
 
 features:
   - title: "Complete JPEG Support"

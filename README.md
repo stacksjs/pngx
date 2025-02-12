@@ -6,7 +6,7 @@
 <!-- [![npm downloads][npm-downloads-src]][npm-downloads-href] -->
 <!-- [![Codecov][codecov-src]][codecov-href] -->
 
-# ts-png
+# pngx
 
 > A TypeScript library for encoding & decoding PNG images with comprehensive type safety and memory management.
 
@@ -26,11 +26,11 @@
 ## Installation
 
 ```bash
-npm install ts-png
+npm install pngx
 # or
-pnpm add ts-png
+pnpm add pngx
 # or
-bun i ts-png
+bun i pngx
 ```
 
 ## Usage
@@ -38,7 +38,7 @@ bun i ts-png
 ### Reading PNG Images
 
 ```ts
-import { PNG } from 'ts-png'
+import { PNG } from 'pngx'
 
 // Basic reading
 const png = new PNG()
@@ -66,7 +66,7 @@ png.on('parsed', function () {
 ### Writing PNG Images
 
 ```ts
-import { PNG } from 'ts-png'
+import { PNG } from 'pngx'
 
 // Create a new PNG with dimensions
 const png = new PNG({
@@ -94,7 +94,7 @@ png.pack().pipe(fs.createWriteStream('output.png'))
 ### Color Types Support
 
 ```ts
-import { PNG } from 'ts-png'
+import { PNG } from 'pngx'
 
 // Grayscale
 const grayPNG = new PNG({
@@ -126,7 +126,7 @@ const palettePNG = new PNG({
 The library supports all standard PNG filter types:
 
 ```ts
-import { PNG } from 'ts-png'
+import { PNG } from 'pngx'
 
 // Specific filter type
 const png = new PNG({
@@ -204,7 +204,7 @@ png.on('parsed', function (this: PNG) {
 The library includes built-in memory management for handling large images:
 
 ```ts
-import { PNG } from 'ts-png'
+import { PNG } from 'pngx'
 
 // Create PNG with memory constraints
 const png = new PNG({
@@ -229,7 +229,7 @@ bun test
 
 ## Changelog
 
-Please see our [releases](https://github.com/stackjs/ts-png/releases) page for more information on what has changed recently.
+Please see our [releases](https://github.com/stackjs/pngx/releases) page for more information on what has changed recently.
 
 ## Contributing
 
@@ -239,7 +239,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[Discussions on GitHub](https://github.com/stacksjs/ts-png/discussions)
+[Discussions on GitHub](https://github.com/stacksjs/pngx/discussions)
 
 For casual chit-chat with others using this package:
 
@@ -269,10 +269,10 @@ The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.
 Made with 💙
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/ts-png?style=flat-square
-[npm-version-href]: https://npmjs.com/package/ts-png
-[github-actions-src]: https://img.shields.io/github/actions/workflow/status/stacksjs/ts-png/ci.yml?style=flat-square&branch=main
-[github-actions-href]: https://github.com/stacksjs/ts-png/actions?query=workflow%3Aci
+[npm-version-src]: https://img.shields.io/npm/v/pngx?style=flat-square
+[npm-version-href]: https://npmjs.com/package/pngx
+[github-actions-src]: https://img.shields.io/github/actions/workflow/status/stacksjs/pngx/ci.yml?style=flat-square&branch=main
+[github-actions-href]: https://github.com/stacksjs/pngx/actions?query=workflow%3Aci
 
-<!-- [codecov-src]: https://img.shields.io/codecov/c/gh/stacksjs/ts-png/main?style=flat-square
-[codecov-href]: https://codecov.io/gh/stacksjs/ts-png -->
+<!-- [codecov-src]: https://img.shields.io/codecov/c/gh/stacksjs/pngx/main?style=flat-square
+[codecov-href]: https://codecov.io/gh/stacksjs/pngx -->

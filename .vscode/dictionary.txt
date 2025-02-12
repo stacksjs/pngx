@@ -62,6 +62,7 @@ paeth
 paletted
 pausable
 PLTE
+pngx
 Postcardware
 prefetch
 preinstall

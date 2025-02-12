@@ -1,24 +1,24 @@
 {
-  "name": "ts-png",
+  "name": "pngx",
   "type": "module",
   "version": "0.1.0",
   "description": "Performant TypeScript PNG encoder & decoder.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
-  "homepage": "https://github.com/stacksjs/ts-png#readme",
+  "homepage": "https://github.com/stacksjs/pngx#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stacksjs/ts-png.git"
+    "url": "git+https://github.com/stacksjs/pngx.git"
   },
   "bugs": {
-    "url": "https://github.com/stacksjs/ts-png/issues"
+    "url": "https://github.com/stacksjs/pngx/issues"
   },
   "keywords": [
     "png",
     "encoder",
     "decoder",
     "typescript",
-    "ts-png",
+    "pngx",
     "library"
   ],
   "exports": {
