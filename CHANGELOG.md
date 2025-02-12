@@ -1,4 +1,16 @@
 
+## v0.1.0...main
+
+[compare changes](https://github.com/stacksjs/pngx/compare/v0.1.0...main)
+
+### 🏡 Chore
+
+- Rename to pngx ([222cacc](https://github.com/stacksjs/pngx/commit/222cacc))
+
+### ❤️ Contributors
+
+- Chris ([@chrisbbreuer](http://github.com/chrisbbreuer))
+
 ## ...main
 
 

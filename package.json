@@ -1,7 +1,7 @@
 {
   "name": "pngx",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Performant TypeScript PNG encoder & decoder.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
