@@ -1,7 +1,8 @@
 import { ok as assert } from 'node:assert'
 import { Buffer, kMaxLength } from 'node:buffer'
+import { EventEmitter } from 'node:events'
 import process from 'node:process'
-import { Z_FINISH, Z_MIN_CHUNK, createInflate as zlibCreateInflate, Inflate as ZlibInflate } from 'node:zlib'
+import { constants } from 'node:zlib'
 
 interface InflateOptions {
   chunkSize?: number
@@ -27,22 +28,22 @@ interface ZlibHandle {
   ) => [number, number]
 }
 
-class Inflate extends ZlibInflate {
+class Inflate extends EventEmitter {
   private _maxLength?: number
   private _offset: number
   private _buffer: Buffer
   private _chunkSize: number
-  private _handle: ZlibHandle
   private _hadError: boolean
   private _writeState?: WriteState
-  private _finishFlushFlag?: number
+  public _finishFlushFlag?: number
+  public _handle?: ZlibHandle
 
   constructor(opts: InflateOptions = {}) {
-    if (opts.chunkSize && opts.chunkSize < Z_MIN_CHUNK) {
-      opts.chunkSize = Z_MIN_CHUNK
-    }
+    super()
 
-    super(opts)
+    if (opts.chunkSize && opts.chunkSize < 64) { // Z_MIN_CHUNK is 64 in zlib
+      opts.chunkSize = 64
+    }
 
     // Node 8 --> 9 compatibility check
     this._offset = (this as any)._outOffset !== undefined
@@ -61,7 +62,8 @@ class Inflate extends ZlibInflate {
 
   _processChunk(chunk: Buffer, flushFlag: number, asyncCb?: (err: Error | null, result: Buffer) => void): Buffer {
     if (typeof asyncCb === 'function') {
-      return super._processChunk(chunk, flushFlag, asyncCb)
+      this.emit('error', new Error('Async processing not supported'))
+      return Buffer.alloc(0)
     }
 
     const availInBefore = chunk?.length || 0
@@ -78,9 +80,8 @@ class Inflate extends ZlibInflate {
     })
 
     const handleChunk = (availInAfter: number, availOutAfter: number): boolean => {
-      if (this._hadError) {
+      if (this._hadError)
         return false
-      }
 
       const have = availOutBefore - availOutAfter
       assert(have >= 0, 'have should not go down')
@@ -90,7 +91,7 @@ class Inflate extends ZlibInflate {
         this._offset += have
 
         if (out.length > leftToInflate) {
-          out = out.slice(0, leftToInflate)
+          out = out.subarray(0, leftToInflate)
         }
 
         buffers.push(out)
@@ -136,20 +137,20 @@ class Inflate extends ZlibInflate {
     }
 
     if (nread >= kMaxLength) {
-      closeInflate(this)
+      closeInflate(this as unknown as Inflate & { _handle?: ZlibHandle })
       throw new RangeError(
         `Cannot create final Buffer. It would be larger than 0x${kMaxLength.toString(16)} bytes`,
       )
     }
 
     const buf = Buffer.concat(buffers, nread)
-    closeInflate(this)
+    closeInflate(this as unknown as Inflate & { _handle?: ZlibHandle })
 
     return buf
   }
 }
 
-function createInflate(opts?: InflateOptions): Inflate {
+export function createInflate(opts?: InflateOptions): Inflate {
   return new Inflate(opts)
 }
 
@@ -159,11 +160,11 @@ function closeInflate(engine: Inflate & { _handle?: ZlibHandle }, callback?: () 
   }
 
   // Caller may invoke .close after a zlib error (which will null _handle)
-  if (!engine._handle) {
+  if (!(engine as Inflate)._handle) {
     return
   }
 
-  engine._handle.close()
+  engine._handle?.close()
   engine._handle = undefined
 }
 
@@ -175,18 +176,13 @@ function zlibBufferSync(engine: Inflate, buffer: Buffer | string): Buffer {
     throw new TypeError('Not a string or buffer')
   }
 
-  const flushFlag = engine._finishFlushFlag ?? Z_FINISH
+  const flushFlag = engine._finishFlushFlag ?? constants.Z_FINISH
+
   return engine._processChunk(buffer, flushFlag)
 }
 
-function inflateSync(buffer: Buffer | string, opts?: InflateOptions): Buffer {
+export function inflateSync(buffer: Buffer | string, opts?: InflateOptions): Buffer {
   return zlibBufferSync(new Inflate(opts), buffer)
-}
-
-export {
-  createInflate,
-  Inflate,
-  inflateSync,
 }
 
 export default inflateSync

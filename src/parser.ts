@@ -73,9 +73,9 @@ export class Parser {
   private readonly simpleTransparency: ParserDependencies['simpleTransparency']
   private readonly headersFinished: Required<ParserDependencies>['headersFinished']
 
-  constructor(options: ParserOptions = {}, dependencies: ParserDependencies) {
+  constructor(options: ParserOptions | undefined, dependencies: ParserDependencies) {
     this._options = {
-      checkCRC: options.checkCRC !== false,
+      checkCRC: options?.checkCRC !== false,
       ...options,
     }
 

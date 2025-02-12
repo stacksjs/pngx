@@ -50,8 +50,8 @@ export class ParserAsync extends ChunkStream {
   private readonly _options: ParserOptions
   private _inflate: Inflate | null
   private _filter: FilterAsync | null
-  private _metaData: ParserMetadata
-  private _bitmapInfo: BitmapInfo
+  private _metaData!: ParserMetadata
+  private _bitmapInfo!: BitmapInfo
   private errord: boolean
   public writable: boolean
 
@@ -66,7 +66,7 @@ export class ParserAsync extends ChunkStream {
     this._options = options
 
     const callbacks: ParserCallbacks = {
-      read: this.read.bind(this),
+      read: () => this.read.bind(this),
       error: this._handleError.bind(this),
       metadata: this._handleMetaData.bind(this),
       gamma: this.emit.bind(this, 'gamma'),

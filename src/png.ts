@@ -86,15 +86,17 @@ export class PNG extends EventEmitter {
 
   public parse(data: Buffer, callback?: (err: Error | null, png: PNG | null) => void): this {
     if (callback) {
-      const handleParsed = (parsedData: Buffer) => {
-        this.removeListener('error', handleError)
-        this.data = parsedData
-        callback(null, this)
+      function handleError(this: PNG, err: Error) {
+        this.removeListener('parsed', handleParsed)
+        if (callback)
+          callback(err, null)
       }
 
-      const handleError = (err: Error) => {
-        this.removeListener('parsed', handleParsed)
-        callback(err, null)
+      function handleParsed(this: PNG, parsedData: Buffer) {
+        this.removeListener('error', handleError)
+        this.data = parsedData
+        if (callback)
+          callback(null, this)
       }
 
       this.once('parsed', handleParsed)
