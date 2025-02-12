@@ -14,10 +14,10 @@ import {
   TYPE_IEND,
   TYPE_IHDR,
 } from './constants'
-import crc32 from './crc'
+import crc32, { CrcCalculator } from './crc'
 import filterPack from './filter-pack'
 
-interface PackerOptions {
+export interface PackerOptions {
   deflateChunkSize?: number
   deflateLevel?: number
   deflateStrategy?: number
@@ -142,9 +142,10 @@ export class Packer {
     }
 
     buf.writeInt32BE(
-      crc32(buf.slice(4, buf.length - 4)),
+      CrcCalculator.crc32(buf.subarray(4, buf.length - 4)),
       buf.length - 4,
     )
+
     return buf
   }
 

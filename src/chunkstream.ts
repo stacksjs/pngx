@@ -1,4 +1,3 @@
-import type { TextEncoding } from 'node:util'
 import { Buffer } from 'node:buffer'
 import process from 'node:process'
 import { Stream } from 'node:stream'
@@ -18,7 +17,7 @@ export class ChunkStream extends Stream {
   private _buffered: number = 0
   private _reads: ReadRequest[] | null = []
   private _paused: boolean = false
-  private _encoding: TextEncoding = 'utf8'
+  private _encoding: BufferEncoding = 'utf-8'
   public writable: boolean = true
 
   constructor() {
@@ -54,7 +53,7 @@ export class ChunkStream extends Stream {
    * @param encoding - Optional encoding for string data
    * @returns Whether the stream is still writable and not paused
    */
-  public write(data: Buffer | string, encoding?: TextEncoding): boolean {
+  public write(data: Buffer | string, encoding?: BufferEncoding): boolean {
     if (!this.writable) {
       this.emit('error', new Error('Stream not writable'))
       return false
@@ -82,7 +81,7 @@ export class ChunkStream extends Stream {
    * @param data - Optional final data to write
    * @param encoding - Optional encoding for string data
    */
-  public end(data?: Buffer | string, encoding?: TextEncoding): void {
+  public end(data?: Buffer | string, encoding?: BufferEncoding): void {
     if (data) {
       this.write(data, encoding)
     }
@@ -107,7 +106,7 @@ export class ChunkStream extends Stream {
   /**
    * Alias for end()
    */
-  public destroySoon: (data?: Buffer | string, encoding?: TextEncoding) => void = this.end
+  public destroySoon: (data?: Buffer | string, encoding?: BufferEncoding) => void = this.end
   /**
    * Handles the end of the stream
    */
