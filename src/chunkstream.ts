@@ -14,9 +14,9 @@ interface ReadRequest {
  * with support for variable-length chunks and partial reads
  */
 export class ChunkStream extends Stream {
-  private _buffers: Buffer[] = []
+  private _buffers: (Buffer | null)[] | null = []
   private _buffered: number = 0
-  private _reads: ReadRequest[] = []
+  private _reads: ReadRequest[] | null = []
   private _paused: boolean = false
   private _encoding: TextEncoding = 'utf8'
   public writable: boolean = true
@@ -31,7 +31,7 @@ export class ChunkStream extends Stream {
    * @param callback - Function to call with read data
    */
   public read(length: number, callback: (data: Buffer) => void): void {
-    this._reads.push({
+    this._reads?.push({
       length: Math.abs(length), // if length < 0 then at most this length
       allowLess: length < 0,
       func: callback,
@@ -41,7 +41,7 @@ export class ChunkStream extends Stream {
       this._process()
 
       // If it's paused and there is not enough data then ask for more
-      if (this._paused && this._reads?.length > 0) {
+      if (this._paused && this._reads && this._reads.length > 0) {
         this._paused = false
         this.emit('drain')
       }
@@ -64,7 +64,7 @@ export class ChunkStream extends Stream {
       ? data
       : Buffer.from(data, encoding || this._encoding)
 
-    this._buffers.push(dataBuffer)
+    this._buffers?.push(dataBuffer)
     this._buffered += dataBuffer.length
 
     this._process()
@@ -107,13 +107,12 @@ export class ChunkStream extends Stream {
   /**
    * Alias for end()
    */
-  public destroySoon = this.end
-
+  public destroySoon: (data?: Buffer | string, encoding?: TextEncoding) => void = this.end
   /**
    * Handles the end of the stream
    */
   private _end(): void {
-    if (this._reads?.length > 0) {
+    if (this._reads && this._reads.length > 0) {
       this.emit('error', new Error('Unexpected end of input'))
     }
 
@@ -139,9 +138,14 @@ export class ChunkStream extends Stream {
    * Processes a read request that allows reading less than requested
    */
   private _processReadAllowingLess(read: ReadRequest): void {
-    this._reads.shift()
+    this._reads?.shift()
+
+    if (!this._buffers)
+      return
 
     const smallerBuf = this._buffers[0]
+    if (!smallerBuf)
+      return
 
     // More data than needed
     if (smallerBuf.length > read.length) {
@@ -161,7 +165,7 @@ export class ChunkStream extends Stream {
    * Processes a read request for exact length
    */
   private _processRead(read: ReadRequest): void {
-    this._reads.shift()
+    this._reads?.shift()
 
     let pos = 0
     let count = 0
@@ -169,7 +173,13 @@ export class ChunkStream extends Stream {
 
     // Create buffer for all data
     while (pos < read.length) {
+      if (!this._buffers)
+        break
+
       const buf = this._buffers[count++]
+      if (!buf)
+        break
+
       const len = Math.min(buf.length, read.length - pos)
 
       buf.copy(data, pos, 0, len)
@@ -183,7 +193,7 @@ export class ChunkStream extends Stream {
 
     // Remove all used buffers
     if (count > 0) {
-      this._buffers.splice(0, count)
+      this._buffers?.splice(0, count)
     }
 
     this._buffered -= read.length
@@ -196,7 +206,7 @@ export class ChunkStream extends Stream {
   private _process(): void {
     try {
       // Process as long as there is data and read requests
-      while (this._buffered > 0 && this._reads?.length > 0) {
+      while (this._buffered > 0 && this._reads && this._reads.length > 0) {
         const read = this._reads[0]
 
         if (read.allowLess) {

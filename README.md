@@ -44,19 +44,20 @@ import { PNG } from 'ts-png'
 const png = new PNG()
 const buffer = await fs.readFile('image.png')
 png.parse(buffer, (error, data) => {
-  if (error) throw error
+  if (error)
+    throw error
   console.log(`Dimensions: ${data.width}x${data.height}`)
 })
 
 // Advanced reading with options
 const png = new PNG({
   filterType: 4, // Paeth filtering
-  bitDepth: 8,   // 8-bit depth
-  colorType: 6   // RGBA color mode
+  bitDepth: 8, // 8-bit depth
+  colorType: 6 // RGBA color mode
 })
 
 // Access image data
-png.on('parsed', function() {
+png.on('parsed', function () {
   const { width, height, data, gamma } = this
   // data is a Buffer containing RGBA pixel data
 })
@@ -79,10 +80,10 @@ const png = new PNG({
 for (let y = 0; y < png.height; y++) {
   for (let x = 0; x < png.width; x++) {
     const idx = (png.width * y + x) << 2
-    png.data[idx] = 255   // R
-    png.data[idx+1] = 0   // G
-    png.data[idx+2] = 0   // B
-    png.data[idx+3] = 255 // A
+    png.data[idx] = 255 // R
+    png.data[idx + 1] = 0 // G
+    png.data[idx + 2] = 0 // B
+    png.data[idx + 3] = 255 // A
   }
 }
 
@@ -129,7 +130,7 @@ import { PNG } from 'ts-png'
 
 // Specific filter type
 const png = new PNG({
-  filterType: 0  // None
+  filterType: 0 // None
   // filterType: 1  // Sub
   // filterType: 2  // Up
   // filterType: 3  // Average
@@ -153,14 +154,17 @@ try {
     if (error) {
       if (error.message.includes('signature')) {
         console.error('Invalid PNG signature')
-      } else if (error.message.includes('IHDR')) {
+      }
+      else if (error.message.includes('IHDR')) {
         console.error('Invalid header chunk')
-      } else {
+      }
+      else {
         console.error('PNG parsing error:', error)
       }
     }
   })
-} catch (err) {
+}
+catch (err) {
   console.error('Processing error:', err)
 }
 ```
@@ -190,7 +194,7 @@ interface BitmapData {
 
 // Types are automatically inferred
 const png = new PNG()
-png.on('parsed', function(this: PNG) {
+png.on('parsed', function (this: PNG) {
   const { width, height, data } = this
 })
 ```
@@ -205,8 +209,8 @@ import { PNG } from 'ts-png'
 // Create PNG with memory constraints
 const png = new PNG({
   deflateChunkSize: 32 * 1024, // 32KB chunks
-  deflateLevel: 9,             // Max compression
-  filterType: 4                // Paeth filtering
+  deflateLevel: 9, // Max compression
+  filterType: 4 // Paeth filtering
 })
 
 // Handle potential memory errors
@@ -249,7 +253,7 @@ Our address: Stacks.js, 12665 Village Ln #2306, Playa Vista, CA 90094, United St
 
 ## Credits
 
-Many thanks to [`jpeg-js`](https://github.com/jpeg-js/jpeg-js) and its contributors for inspiring this project.
+Many thanks to [`pngjs`](https://github.com/pngjs/pngjs) and its contributors for inspiring this project.
 
 ## Sponsors
 

@@ -27,7 +27,7 @@ export class PNG extends EventEmitter {
   private readonly _parser: Parser
   private readonly _packer: Packer
 
-  static sync = PNGSync
+  static sync: typeof PNGSync = PNGSync
 
   constructor(options: PNGOptions = {}) {
     super()
