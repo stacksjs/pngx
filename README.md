@@ -174,6 +174,8 @@ catch (err) {
 Full TypeScript support with detailed type definitions:
 
 ```ts
+import { Buffer } from 'node:buffer'
+
 interface PNGOptions {
   width?: number
   height?: number

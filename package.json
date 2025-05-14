@@ -50,20 +50,25 @@
   "devDependencies": {
     "@stacksjs/docs": "^0.69.3",
     "@stacksjs/eslint-config": "^3.15.1-beta.4",
+    "@stacksjs/gitlint": "^0.1.5",
     "@types/bun": "^1.2.2",
     "bumpp": "^10.0.3",
+    "bun-git-hooks": "^0.2.16",
     "bun-plugin-dtsx": "^0.21.9",
     "bunfig": "^0.7.0",
     "changelogen": "^0.5.7",
-    "lint-staged": "^15.4.3",
-    "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.3",
     "unocss": "^65.5.0"
   },
   "overrides": {
     "unconfig": "0.3.10"
   },
-  "lint-staged": {
-    "*.{js,ts}": "bunx --bun eslint . --fix"
+  "git-hooks": {
+    "pre-commit": {
+      "staged-lint": {
+        "*.{js,ts,json,yaml,yml,md}": "bunx --bun eslint . --fix"
+      }
+    },
+    "commit-msg": "bunx gitlint .git/COMMIT_EDITMSG"
   }
 }

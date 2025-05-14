@@ -60,6 +60,33 @@ const sidebar = [
       { text: 'Config', link: '/config' },
     ],
   },
+  {
+    text: 'Features',
+    items: [
+      { text: 'Image Processing', link: '/features/image-processing' },
+      { text: 'Synchronous Operations', link: '/features/sync-operations' },
+      { text: 'Asynchronous Operations', link: '/features/async-operations' },
+      { text: 'Event Handling', link: '/features/event-handling' },
+    ],
+  },
+  {
+    text: 'Advanced',
+    items: [
+      { text: 'Buffer Management', link: '/advanced/buffer-management' },
+      { text: 'Gamma Correction', link: '/advanced/gamma-correction' },
+      { text: 'BitBlt Operations', link: '/advanced/bitblt-operations' },
+      { text: 'Performance Tips', link: '/advanced/performance' },
+    ],
+  },
+  {
+    text: 'API Reference',
+    items: [
+      { text: 'PNG Class', link: '/api-reference/png' },
+      { text: 'PNGSync Class', link: '/api-reference/pngsync' },
+      { text: 'Parser', link: '/api-reference/parser' },
+      { text: 'Packer', link: '/api-reference/packer' },
+    ],
+  },
   { text: 'Showcase', link: '/Showcase' },
 ]
 const description = 'A TypeScript Starter Kit. For a better Development Experience.'
