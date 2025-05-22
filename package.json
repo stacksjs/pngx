@@ -48,16 +48,16 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "@stacksjs/docs": "^0.69.3",
+    "@stacksjs/docs": "^0.70.23",
     "@stacksjs/eslint-config": "^3.15.1-beta.4",
     "@stacksjs/gitlint": "^0.1.5",
-    "@types/bun": "^1.2.2",
-    "bumpp": "^10.0.3",
+    "@types/bun": "^1.2.14",
+    "bumpp": "^10.1.1",
     "bun-git-hooks": "^0.2.16",
-    "bun-plugin-dtsx": "^0.21.9",
-    "bunfig": "^0.7.0",
-    "changelogen": "^0.5.7",
-    "typescript": "^5.7.3",
+    "bun-plugin-dtsx": "^0.21.12",
+    "bunfig": "^0.10.0",
+    "changelogen": "^0.6.1",
+    "typescript": "^5.8.3",
     "unocss": "^65.5.0"
   },
   "overrides": {
