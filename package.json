@@ -61,7 +61,7 @@
     "bun-plugin-dtsx": "^0.21.9",
     "bunfig": "^0.7.0",
     "typescript": "^5.7.3",
-    "unocss": "^66.5.0"
+    "unocss": "^66.5.1"
   },
   "overrides": {
     "unconfig": "0.3.10"
