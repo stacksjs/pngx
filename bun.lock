@@ -5,6 +5,7 @@
       "name": "ts-jpeg",
       "devDependencies": {
         "@stacksjs/bumpx": "^0.1.84",
+        "@stacksjs/clarity": "^0.3.23",
         "@stacksjs/docs": "^0.70.23",
         "@stacksjs/eslint-config": "^3.15.1-beta.4",
         "@stacksjs/gitlint": "^0.1.5",
@@ -484,6 +485,8 @@
     "@stacksjs/bumpx": ["@stacksjs/bumpx@0.1.84", "", { "dependencies": { "@stacksjs/clapp": "^0.1.16", "@stacksjs/logsmith": "^0.1.15", "bunfig": "^0.14.1" }, "bin": { "bumpx": "dist/bin/cli.js" } }, "sha512-Mniy85XvWhjbQ94UwGo0781ERlCqZDQ5w9Lj1Qgd1T21tK+MTRaCDTYeyrmkz/Xqvn97TJmBSxRg07VkS4Z8VA=="],
 
     "@stacksjs/clapp": ["@stacksjs/clapp@0.1.16", "", { "bin": { "clapp": "dist/bin/cli.js", "@stacksjs/clapp": "dist/bin/cli.js" } }, "sha512-BDmYu9Rk/HHIVc4vQjgQO6MzXNMJvPG6ZGiiEAPQT8EAidx3/6S6O7kyY2UdfJSksiCd5SKFK+WYd1uAs88BrQ=="],
+
+    "@stacksjs/clarity": ["@stacksjs/clarity@0.3.23", "", { "bin": { "clarity": "dist/bin/cli.js" } }, "sha512-qrQjjcXWueBSM1vr1i0OmEMGYtCICVBtNvpVtoMLXIqR+jKAGRUqvguEOwg9vKth6VKMBqJ0FDpukJVJZhKGcg=="],
 
     "@stacksjs/docs": ["@stacksjs/docs@0.70.23", "", { "dependencies": { "@iconify-json/carbon": "^1.2.8", "@shikijs/vitepress-twoslash": "^3.2.1", "@vite-pwa/assets-generator": "^1.0.0", "@vite-pwa/vitepress": "^1.0.0", "unocss": "^66.0.0", "unplugin-icons": "^22.1.0", "unplugin-vue-components": "^28.4.1", "vite-plugin-pwa": "^1.0.0", "vitepress": "1.6.3" } }, "sha512-kRk/aza/wQAAgF0fhUhG8bUHhqk3RnjBkZyoRW0fvYs3dLaAArJYX/uVquZixlQnqgizGeGZT986tEFjs5Ly+A=="],
 
